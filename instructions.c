@@ -29,31 +29,7 @@ void storeAc (Neander *n) {
 }
 
 void add (Neander *n) {
-  int acNumber = 0;
-  
-  if (n->ac > 127)
-    acNumber = n->ac - 256;
-  else
-    acNumber = n->ac;
-
-  int endNumber = 0;
-  
-  if (n->mem[n->rem] > 127)
-    endNumber = endNumber - 256;
-  else
-    endNumber = n->mem[n->rem];
-
-  if (acNumber + endNumber > 127)
-    acNumber += endNumber - 127;
-  else if (acNumber + endNumber < -127) // não sei se esse deveria ser o comportamento
-    acNumber = acNumber + endNumber + 127;
-  else
-    acNumber += endNumber;
-
-  if (acNumber < 0)
-    n->ac = 256 + acNumber;
-  else
-    n->ac = acNumber;
+  n->ac += n->mem[n->rem];
   
   setRst(n);
 }
