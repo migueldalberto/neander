@@ -2,3 +2,4 @@
 *.o
 neander
 last.txt
+*.mem
