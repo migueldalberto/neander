@@ -28,10 +28,6 @@ void storeAc (Neander *n) {
   n->mem[n->rem] = n->ac;
 }
 
-void notImplemented (const char *s) {
-  fprintf(stderr, "'%s' not implemented\n", s);
-}
-
 void add (Neander *n) {
   int acNumber;
   
@@ -59,20 +55,19 @@ void add (Neander *n) {
   else
     n->ac = acNumber;
   
-  //  n->ac += n->mem[n->rem];
   setRst(n);
 }
 
 void or (Neander *n) {
-  notImplemented(__func__);
+  n->ac = n->ac | n->mem[n->rem];
 }
 
 void and (Neander *n) {
-  notImplemented(__func__);
+  n->ac = n->ac & n->mem[n->rem];
 }
 
 void not (Neander *n) {
-  notImplemented(__func__);
+  n->ac = ~n->ac;
 }
 
 void jump (Neander *n) {
