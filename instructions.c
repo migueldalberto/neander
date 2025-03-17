@@ -2,9 +2,6 @@
 
 #include "instructions.h"
 
-#define N_OF_BITS 8
-#define CALC_COMPLEMENT (x) 0x100 - x
-
 void setRst (Neander *n) {
   if (n->ac == 0)
     n->rst.z = true;
