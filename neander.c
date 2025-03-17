@@ -48,8 +48,15 @@ Instruction decode(uint8_t inst) {
   return instructionSet[0];
 }
 
-void dumpMemory (Neander *n) {
-  for (int i = 0; i < MEM_LENGTH; ++i) {
-    printf("%x %x\n", i, n->mem[i]);
+int dumpMemory (Neander *n, const char* filename) {
+  FILE* f = fopen(filename, "w");
+
+  if (f == NULL) {
+    return 1;
   }
+  
+  fwrite(n->mem, sizeof(uint8_t), MEM_LENGTH, f);
+  fclose(f);
+
+  return 0;
 }

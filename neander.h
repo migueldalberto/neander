@@ -20,6 +20,6 @@ typedef struct {
 } Neander;
 
 void startNeander (Neander*);
-void dumpMemory (Neander*);
+int dumpMemory (Neander*, const char*);
 
 #endif
