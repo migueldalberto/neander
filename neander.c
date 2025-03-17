@@ -48,14 +48,46 @@ Instruction decode(uint8_t inst) {
   return instructionSet[0];
 }
 
+int loadMemory (Neander *n, const char* filename) {
+  FILE* f = fopen(filename, "r");
+
+  if (f == NULL || n == NULL)
+    return 1;
+
+  uint8_t buf[0x204] = {0};
+
+  int bytesRead = fread(buf, sizeof(uint8_t), 0x204, f);
+  fclose(f);
+
+  if (bytesRead != 0x204) {
+    return 1;
+  }
+
+  for (int i = 4; i < 0x204; i +=2) {
+    n->mem[(i - 4) / 2] = buf[i];
+  }
+
+  return 0;
+}
+
 int dumpMemory (Neander *n, const char* filename) {
   FILE* f = fopen(filename, "w");
 
-  if (f == NULL) {
+  if (f == NULL || n == NULL) {
     return 1;
   }
-  
-  fwrite(n->mem, sizeof(uint8_t), MEM_LENGTH, f);
+
+  uint8_t buf[0x204] = {0};
+  buf[0] = 0x03;
+  buf[1] = 0x4e;
+  buf[2] = 0x44;
+  buf[3] = 0x52;
+
+  for (int i = 4; i < 0x204; i += 2) {
+    buf[i] = n->mem[(i - 4) / 2];
+  }
+    
+  fwrite(buf, sizeof(uint8_t), 0x204, f);
   fclose(f);
 
   return 0;

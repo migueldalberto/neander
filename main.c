@@ -4,42 +4,22 @@
 
 #include "neander.h"
 
-int main () {
+int main (int argc, char** argv) {
   Neander n = {0};
 
-  n.mem[0x00] = 0x20; // LDA
-  n.mem[0x01] = 0x80;
-  
-  n.mem[0x02] = 0xa0; // JN
-  n.mem[0x03] = 0x1f;
+  n.mem[0x01] = 0xf0;
 
-  n.mem[0x04] = 0x30; // ADD
-  n.mem[0x05] = 0x7f;
-
-  n.mem[0x06] = 0x10; // STA
-  n.mem[0x07] = 0x80;
-
-  n.mem[0x08] = 0x20; // LDA
-  n.mem[0x09] = 0x82;
-
-  n.mem[0x0a] = 0x30; // ADD
-  n.mem[0x0b] = 0x81;
-
-  n.mem[0x0c] = 0x10; // STA
-  n.mem[0x0d] = 0x82;
-
-  n.mem[0x0e] = 0x80; // JMP
-  n.mem[0x0f] = 0x00;
-  
-  n.mem[0x1f] = 0xf0; // HLT
-
-  n.mem[0x7f] = 0xfe;
-  n.mem[0x80] = 0x04;
-  n.mem[0x81] = 0x03;
-
+  if (argc > 1) {
+    if (loadMemory(&n, argv[1])) {
+      fprintf(stderr, "failed to read file '%s'\n", argv[1]);
+    } 
+  }
+ 
   startNeander(&n);
 
-  dumpMemory(&n);
+  if (dumpMemory(&n, "out.mem")) {
+    fprintf(stderr, "failed to dump memory to file '%s'\n", "b.mem");
+  }
 
   return 0;
 }

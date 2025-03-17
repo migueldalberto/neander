@@ -21,5 +21,6 @@ typedef struct {
 
 void startNeander (Neander*);
 int dumpMemory (Neander*, const char*);
+int loadMemory (Neander*, const char*);
 
 #endif
