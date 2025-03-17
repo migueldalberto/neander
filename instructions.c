@@ -11,7 +11,7 @@ void setRst (Neander *n) {
   else
     n->rst.z = false;
 
-  if (n->ac < 0)
+  if (n->ac > 127)
     n->rst.n = true;
   else
     n->rst.n = false;
@@ -29,7 +29,7 @@ void storeAc (Neander *n) {
 }
 
 void notImplemented (const char *s) {
-  fprintf(stderr, "'%s' not implemented\n");
+  fprintf(stderr, "'%s' not implemented\n", s);
 }
 
 void add (Neander *n) {
