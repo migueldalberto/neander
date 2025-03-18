@@ -70,10 +70,10 @@ int loadMemory (Neander *n, const char* filename) {
   return 0;
 }
 
-int dumpMemory (Neander *n, const char* filename) {
+int dumpMemory (Neander n, const char* filename) {
   FILE* f = fopen(filename, "w");
 
-  if (f == NULL || n == NULL) {
+  if (f == NULL) {
     return 1;
   }
 
@@ -84,11 +84,17 @@ int dumpMemory (Neander *n, const char* filename) {
   buf[3] = 0x52;
 
   for (int i = 4; i < 0x204; i += 2) {
-    buf[i] = n->mem[(i - 4) / 2];
+    buf[i] = n.mem[(i - 4) / 2];
   }
     
   fwrite(buf, sizeof(uint8_t), 0x204, f);
   fclose(f);
 
   return 0;
+}
+
+void printMemory(Neander n) {
+  for (int i = 0; i < MEM_LENGTH; ++i) {
+    printf("%2x: %2x\n", i, n.mem[i]);
+  }
 }
