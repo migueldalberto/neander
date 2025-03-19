@@ -95,6 +95,8 @@ int dumpMemory (Neander n, const char* filename) {
 
 void printMemory(Neander n) {
   for (int i = 0; i < MEM_LENGTH; ++i) {
-    printf("%2x: %2x\n", i, n.mem[i]);
+    printf("%02x ", n.mem[i]);
+    if ((i + 1) % 0x10 == 0)
+      printf("\n");
   }
 }
