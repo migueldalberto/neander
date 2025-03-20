@@ -63,17 +63,25 @@ int main (int argc, char** argv) {
   arguments.outputFile = "";
 
   argp_parse (&argp, argc, argv, 0, 0, &arguments);
-
-  printf("ARGUMENT='%s', silent=%d, debug=%d, outputFile='%s'\n",
-	 arguments.args[0], arguments.silent, arguments.debug, arguments.outputFile);
   
   Neander n = {0};
 
   if (loadMemory(&n, arguments.args[0])) {
     fprintf(stderr, "failed to read file '%s'\n", arguments.args[0]);
-  } 
-   
-  startNeander(&n);
+  }
+
+  if (arguments.debug) {
+    do {
+      printNeanderState(n);
+    
+      char c;
+      while ((c=getchar()) != '\n') { }
+    
+      neanderStepIn(&n);
+    } while (!n.halted);
+  } else {
+    neanderRun(&n);
+  }
 
   if (arguments.outputFile[0] != '\0') {
     if (dumpMemory(n, arguments.outputFile)) {
@@ -81,7 +89,8 @@ int main (int argc, char** argv) {
     }
   }
 
-  printMemory(n);
+  if (!arguments.silent)
+    printMemory(n);
 
   return 0;
 }

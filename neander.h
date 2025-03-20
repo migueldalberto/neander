@@ -19,8 +19,11 @@ typedef struct {
   bool halted;
 } Neander;
 
-void startNeander (Neander*);
+void printNeanderState (Neander);
+void neanderRun (Neander*);
+void neanderStepIn (Neander*);
 int dumpMemory (Neander, const char*);
 int loadMemory (Neander*, const char*);
 void printMemory (Neander);
+
 #endif

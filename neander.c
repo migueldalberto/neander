@@ -19,24 +19,39 @@ Instruction instructionSet[NUMBER_OF_INSTRUCTIONS] = {
   { .code = HLT, .hasOperand = false, .operation = halt }
 };
 
-void startNeander (Neander *n) {
-  n->halted = false;
-  while (!n->halted) {
-    // search instruction
-    n->ri = n->mem[n->pc] >> 4;
-    n->pc++;
-
-    // decode instruction
-    Instruction inst = decode(n->ri);
-
-    if (inst.hasOperand){
-      n->rem = n->mem[n->pc];
-      n->pc++;
-    }
-
-    // execute
-    inst.operation(n);
+void printNeanderState (Neander n) {
+  printf("%02x ", n.mem[n.pc - 1]);
+  
+  printf(">%02x ", n.mem[n.pc]);
+  if (n.pc < 0x100 - 1) {
+    printf("%02x\n", n.mem[n.pc + 1]);
+  } else {
+    putchar('\n');
   }
+
+  
+  printf("AC: %d\tPC: %02x\n", n.ac, n.pc);
+  printf("N: %d\tZ: %d\n", n.rst.n, n.rst.z);
+}
+
+void neanderRun (Neander *n) {
+  while (!n->halted) {
+    neanderStepIn(n);
+  }
+}
+
+void neanderStepIn (Neander *n) {
+  n->ri = n->mem[n->pc] >> 4;
+  n->pc++;
+  
+  Instruction inst = decode(n->ri);
+
+  if (inst.hasOperand){
+    n->rem = n->mem[n->pc];
+    n->pc++;
+  }
+
+  inst.operation(n);
 }
 
 Instruction decode(uint8_t inst) {
