@@ -19,13 +19,13 @@ O simulador para Windows pode ser baixado [aqui](https://www.inf.ufrgs.br/arq/wi
 | 1010 	 | JZ end    | Desvio condicional, se "Z=1", para o endereço "end" da memória |
 | 1111 	 | HLT 	     | Para o ciclo de busca-decodificação-execução |
 
-## Usage
+## Uso
 
-`./neander [OPTIONS] INPUT_MEMORY`
+`./neander [OPCOES] ARQUIVO_MEMORIA`
 
-Options:
+Opções:
 
-- `--debug, -d`, wait to run each instruction
-- `--output=OUTPUT, -o OUTPUT`, outputs ending memory (as bytes) to OUTPUT
-- `--silent, -s`, doesn't print memory (as chars) to stdout
+- `--debug, -d`, Espera para executar cada instrução
+- `--output=OUTPUT, -o OUTPUT`, Salva a memória final do programa (.mem) em OUTPUT
+- `--silent, -s`, Não imprime a memória (em caracteres) na saída padrão
 
